@@ -64,12 +64,6 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
-    },
-    "journals": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::journal.journal",
-      "mappedBy": "user_id"
     }
   }
 }
