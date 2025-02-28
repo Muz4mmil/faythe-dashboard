@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_comments",
+  "info": {
+    "singularName": "user-comment",
+    "pluralName": "user-comments",
+    "displayName": "User Comments"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "parent_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::post.post",
+      "inversedBy": "user_comments"
+    },
+    "parent_type": {
+      "type": "enumeration",
+      "enum": [
+        "post",
+        "comment"
+      ],
+      "required": true
+    },
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "is_flagged": {
+      "type": "boolean",
+      "default": false
+    },
+    "flag_reason": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "user_prayers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-prayer.user-prayer",
+      "mappedBy": "user_comment"
+    },
+    "comment_histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment-history.comment-history",
+      "mappedBy": "user_comment"
+    }
+  }
+}

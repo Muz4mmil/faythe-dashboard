@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "comment_histories",
+  "info": {
+    "singularName": "comment-history",
+    "pluralName": "comment-histories",
+    "displayName": "Comment History"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_comment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-comment.user-comment",
+      "inversedBy": "comment_histories"
+    }
+  }
+}

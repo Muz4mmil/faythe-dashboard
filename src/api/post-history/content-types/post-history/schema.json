@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "post_histories",
+  "info": {
+    "singularName": "post-history",
+    "pluralName": "post-histories",
+    "displayName": "Post History"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "post_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::post.post",
+      "inversedBy": "post_histories"
+    }
+  }
+}

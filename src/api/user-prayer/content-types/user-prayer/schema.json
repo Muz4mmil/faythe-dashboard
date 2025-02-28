@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_prayers",
+  "info": {
+    "singularName": "user-prayer",
+    "pluralName": "user-prayers",
+    "displayName": "User Prayers"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_post": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::post.post",
+      "inversedBy": "user_prayers"
+    },
+    "user_comment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-comment.user-comment",
+      "inversedBy": "user_prayers"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "user_post",
+        "user_comment"
+      ]
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_chats",
+  "info": {
+    "singularName": "user-chat",
+    "pluralName": "user-chats",
+    "displayName": "User Chats"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_1": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_chats"
+    },
+    "user_2": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_chats"
+    },
+    "is_flagged": {
+      "type": "boolean",
+      "default": false
+    },
+    "flag_reason": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "user_messages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-message.user-message",
+      "mappedBy": "chatId"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Posts",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "post",
+        "prayer_request",
+        "testimonial"
+      ]
+    },
+    "image_urls": {
+      "type": "string"
+    },
+    "video_urls": {
+      "type": "string"
+    },
+    "is_flagged": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_archived": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "user_comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-comment.user-comment",
+      "mappedBy": "parent_id"
+    },
+    "user_prayers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-prayer.user-prayer",
+      "mappedBy": "user_post"
+    },
+    "post_follows": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post-follow.post-follow",
+      "mappedBy": "post_id"
+    },
+    "post_histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post-history.post-history",
+      "mappedBy": "post_id"
+    },
+    "flag_reason": {
+      "type": "enumeration",
+      "enum": [
+        "hate speech",
+        "scam or fraude",
+        "false information",
+        "sexual content",
+        "voilence",
+        "something else"
+      ]
+    }
+  }
+}

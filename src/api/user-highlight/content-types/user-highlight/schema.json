@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_highlights",
+  "info": {
+    "singularName": "user-highlight",
+    "pluralName": "user-highlights",
+    "displayName": "User Highlights"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "is_flagged": {
+      "type": "boolean",
+      "default": false
+    },
+    "flag_reason": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "user_story": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-story.user-story",
+      "inversedBy": "highlights_id"
+    }
+  }
+}
