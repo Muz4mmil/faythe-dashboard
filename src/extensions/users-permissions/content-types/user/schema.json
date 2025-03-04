@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -76,6 +76,29 @@
       "relation": "oneToMany",
       "target": "api::user-message.user-message",
       "mappedBy": "senderId"
+    },
+    "phone": {
+      "type": "string",
+      "unique": true
+    },
+    "is_registered": {
+      "type": "boolean"
+    },
+    "is_flagged": {
+      "type": "boolean",
+      "default": false
+    },
+    "flag_reason": {
+      "type": "enumeration",
+      "enum": [
+        "Hate Speech",
+        "Scam or Fraud",
+        "False Information"
+      ]
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

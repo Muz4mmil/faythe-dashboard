@@ -639,6 +639,50 @@ export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
+  collectionName: 'user_details';
+  info: {
+    displayName: 'User Details';
+    pluralName: 'user-details';
+    singularName: 'user-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address_line_1: Schema.Attribute.String;
+    address_line_2: Schema.Attribute.String;
+    bio: Schema.Attribute.Text;
+    city: Schema.Attribute.String;
+    country: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dob: Schema.Attribute.Date;
+    first_name: Schema.Attribute.String;
+    gender: Schema.Attribute.Enumeration<
+      ['Male', 'Female', 'Trans', 'Not specified']
+    >;
+    last_name: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-detail.user-detail'
+    > &
+      Schema.Attribute.Private;
+    pincode: Schema.Attribute.String;
+    profile_image: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiUserHighlightUserHighlight
   extends Struct.CollectionTypeSchema {
   collectionName: 'user_highlights';
@@ -1241,7 +1285,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1255,6 +1298,12 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    flag_reason: Schema.Attribute.Enumeration<
+      ['Hate Speech', 'Scam or Fraud', 'False Information']
+    >;
+    is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    is_registered: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1266,6 +1315,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phone: Schema.Attribute.String & Schema.Attribute.Unique;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1310,6 +1360,7 @@ declare module '@strapi/strapi' {
       'api::post.post': ApiPostPost;
       'api::user-chat.user-chat': ApiUserChatUserChat;
       'api::user-comment.user-comment': ApiUserCommentUserComment;
+      'api::user-detail.user-detail': ApiUserDetailUserDetail;
       'api::user-highlight.user-highlight': ApiUserHighlightUserHighlight;
       'api::user-message.user-message': ApiUserMessageUserMessage;
       'api::user-prayer.user-prayer': ApiUserPrayerUserPrayer;
