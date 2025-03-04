@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_sessions",
+  "info": {
+    "singularName": "user-session",
+    "pluralName": "user-sessions",
+    "displayName": "User Sessions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "session_token": {
+      "type": "text"
+    },
+    "device_token": {
+      "type": "text"
+    },
+    "expires_at": {
+      "type": "datetime"
+    }
+  }
+}

@@ -77,6 +77,10 @@
         "voilence",
         "something else"
       ]
+    },
+    "prayer_count": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

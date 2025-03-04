@@ -369,6 +369,40 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBlockedUserBlockedUser extends Struct.CollectionTypeSchema {
+  collectionName: 'blocked_users';
+  info: {
+    description: '';
+    displayName: 'Blocked Users';
+    pluralName: 'blocked-users';
+    singularName: 'blocked-user';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    blocked_user_id: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::blocked-user.blocked-user'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCommentHistoryCommentHistory
   extends Struct.CollectionTypeSchema {
   collectionName: 'comment_histories';
@@ -431,6 +465,42 @@ export interface ApiJournalPresetQuestionJournalPresetQuestion
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiOtpVerificationOtpVerification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'otp_verifications';
+  info: {
+    description: '';
+    displayName: 'otp verification';
+    pluralName: 'otp-verifications';
+    singularName: 'otp-verification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expires_at: Schema.Attribute.DateTime;
+    is_verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::otp-verification.otp-verification'
+    > &
+      Schema.Attribute.Private;
+    otp_code: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
     >;
@@ -535,6 +605,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::post-history.post-history'
     >;
+    prayer_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
@@ -683,6 +754,42 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiUserFollowerUserFollower
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_followers';
+  info: {
+    displayName: 'User Followers';
+    pluralName: 'user-followers';
+    singularName: 'user-follower';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    following_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-follower.user-follower'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiUserHighlightUserHighlight
   extends Struct.CollectionTypeSchema {
   collectionName: 'user_highlights';
@@ -715,6 +822,43 @@ export interface ApiUserHighlightUserHighlight
     user_story: Schema.Attribute.Relation<
       'manyToOne',
       'api::user-story.user-story'
+    >;
+  };
+}
+
+export interface ApiUserLoginActivityUserLoginActivity
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_login_activities';
+  info: {
+    displayName: 'User Login Activity';
+    pluralName: 'user-login-activities';
+    singularName: 'user-login-activity';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    activity_type: Schema.Attribute.Enumeration<
+      ['login', 'registered', 'logout', 'deleted']
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    device_type: Schema.Attribute.Enumeration<['android', 'ios']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-login-activity.user-login-activity'
+    > &
+      Schema.Attribute.Private;
+    location: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
     >;
   };
 }
@@ -786,6 +930,40 @@ export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
       'api::user-comment.user-comment'
     >;
     user_post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
+  };
+}
+
+export interface ApiUserSessionUserSession extends Struct.CollectionTypeSchema {
+  collectionName: 'user_sessions';
+  info: {
+    displayName: 'User Sessions';
+    pluralName: 'user-sessions';
+    singularName: 'user-session';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    device_token: Schema.Attribute.Text;
+    expires_at: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-session.user-session'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    session_token: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1330,6 +1508,10 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::user-chat.user-chat'
     >;
+    user_followers: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-follower.user-follower'
+    >;
     user_messages: Schema.Attribute.Relation<
       'oneToMany',
       'api::user-message.user-message'
@@ -1353,17 +1535,22 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::blocked-user.blocked-user': ApiBlockedUserBlockedUser;
       'api::comment-history.comment-history': ApiCommentHistoryCommentHistory;
       'api::journal-preset-question.journal-preset-question': ApiJournalPresetQuestionJournalPresetQuestion;
+      'api::otp-verification.otp-verification': ApiOtpVerificationOtpVerification;
       'api::post-follow.post-follow': ApiPostFollowPostFollow;
       'api::post-history.post-history': ApiPostHistoryPostHistory;
       'api::post.post': ApiPostPost;
       'api::user-chat.user-chat': ApiUserChatUserChat;
       'api::user-comment.user-comment': ApiUserCommentUserComment;
       'api::user-detail.user-detail': ApiUserDetailUserDetail;
+      'api::user-follower.user-follower': ApiUserFollowerUserFollower;
       'api::user-highlight.user-highlight': ApiUserHighlightUserHighlight;
+      'api::user-login-activity.user-login-activity': ApiUserLoginActivityUserLoginActivity;
       'api::user-message.user-message': ApiUserMessageUserMessage;
       'api::user-prayer.user-prayer': ApiUserPrayerUserPrayer;
+      'api::user-session.user-session': ApiUserSessionUserSession;
       'api::user-story.user-story': ApiUserStoryUserStory;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

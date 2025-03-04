@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "otp_verifications",
+  "info": {
+    "singularName": "otp-verification",
+    "pluralName": "otp-verifications",
+    "displayName": "otp verification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "otp_code": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "datetime"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

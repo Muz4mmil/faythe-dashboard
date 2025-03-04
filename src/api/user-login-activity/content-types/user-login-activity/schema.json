@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_login_activities",
+  "info": {
+    "singularName": "user-login-activity",
+    "pluralName": "user-login-activities",
+    "displayName": "User Login Activity"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "activity_type": {
+      "type": "enumeration",
+      "enum": [
+        "login",
+        "registered",
+        "logout",
+        "deleted"
+      ]
+    },
+    "device_type": {
+      "type": "enumeration",
+      "enum": [
+        "android",
+        "ios"
+      ]
+    },
+    "location": {
+      "type": "text"
+    }
+  }
+}

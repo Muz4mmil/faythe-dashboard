@@ -99,6 +99,12 @@
     "is_deleted": {
       "type": "boolean",
       "default": false
+    },
+    "user_followers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-follower.user-follower",
+      "mappedBy": "following_id"
     }
   }
 }
