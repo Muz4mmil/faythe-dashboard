@@ -7,7 +7,8 @@
     "displayName": "Comment History"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": true,
+    "populateCreatorFields": true
   },
   "attributes": {
     "user_comment": {
