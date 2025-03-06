@@ -379,12 +379,12 @@ export interface ApiBlockedUserBlockedUser extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     blocked_user_id: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -394,8 +394,7 @@ export interface ApiBlockedUserBlockedUser extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     reason: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -413,11 +412,11 @@ export interface ApiCommentHistoryCommentHistory
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -426,8 +425,7 @@ export interface ApiCommentHistoryCommentHistory
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_comment: Schema.Attribute.Relation<
       'manyToOne',
       'api::user-comment.user-comment'
@@ -446,11 +444,11 @@ export interface ApiJournalPresetQuestionJournalPresetQuestion
   };
   options: {
     draftAndPublish: false;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     journal_question: Schema.Attribute.String;
@@ -462,8 +460,7 @@ export interface ApiJournalPresetQuestionJournalPresetQuestion
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -482,11 +479,11 @@ export interface ApiOtpVerificationOtpVerification
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     expires_at: Schema.Attribute.DateTime;
     is_verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -498,8 +495,7 @@ export interface ApiOtpVerificationOtpVerification
     otp_code: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -516,11 +512,11 @@ export interface ApiPostFollowPostFollow extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -531,8 +527,7 @@ export interface ApiPostFollowPostFollow extends Struct.CollectionTypeSchema {
     post_id: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
   };
 }
 
@@ -545,11 +540,11 @@ export interface ApiPostHistoryPostHistory extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -559,8 +554,7 @@ export interface ApiPostHistoryPostHistory extends Struct.CollectionTypeSchema {
     post_id: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
   };
 }
 
@@ -579,6 +573,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creator_id: Schema.Attribute.String & Schema.Attribute.Required;
     description: Schema.Attribute.Text;
     flag_reason: Schema.Attribute.Enumeration<
       [
@@ -635,11 +630,11 @@ export interface ApiUserChatUserChat extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     flag_reason: Schema.Attribute.String;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -651,8 +646,7 @@ export interface ApiUserChatUserChat extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_1: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
@@ -671,6 +665,7 @@ export interface ApiUserChatUserChat extends Struct.CollectionTypeSchema {
 export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
   collectionName: 'user_comments';
   info: {
+    description: '';
     displayName: 'User Comments';
     pluralName: 'user-comments';
     singularName: 'user-comment';
@@ -699,6 +694,7 @@ export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
     parent_id: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     parent_type: Schema.Attribute.Enumeration<['post', 'comment']> &
       Schema.Attribute.Required;
+    prayer_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -719,6 +715,7 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     address_line_1: Schema.Attribute.String;
@@ -727,8 +724,7 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
     city: Schema.Attribute.String;
     country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     dob: Schema.Attribute.Date;
     first_name: Schema.Attribute.String;
     gender: Schema.Attribute.Enumeration<
@@ -745,8 +741,7 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
     profile_image: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -764,11 +759,11 @@ export interface ApiUserFollowerUserFollower
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     following_id: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
@@ -781,8 +776,7 @@ export interface ApiUserFollowerUserFollower
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_id: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
@@ -800,11 +794,11 @@ export interface ApiUserHighlightUserHighlight
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     flag_reason: Schema.Attribute.String;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -817,8 +811,7 @@ export interface ApiUserHighlightUserHighlight
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_story: Schema.Attribute.Relation<
       'manyToOne',
       'api::user-story.user-story'
@@ -836,14 +829,14 @@ export interface ApiUserLoginActivityUserLoginActivity
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     activity_type: Schema.Attribute.Enumeration<
       ['login', 'registered', 'logout', 'deleted']
     >;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     device_type: Schema.Attribute.Enumeration<['android', 'ios']>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -854,8 +847,7 @@ export interface ApiUserLoginActivityUserLoginActivity
     location: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -872,13 +864,13 @@ export interface ApiUserMessageUserMessage extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     chatId: Schema.Attribute.Relation<'manyToOne', 'api::user-chat.user-chat'>;
     content: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -894,8 +886,7 @@ export interface ApiUserMessageUserMessage extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     >;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
   };
 }
 
@@ -908,11 +899,11 @@ export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -923,8 +914,7 @@ export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['user_post', 'user_comment']>;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_comment: Schema.Attribute.Relation<
       'manyToOne',
       'api::user-comment.user-comment'
@@ -942,11 +932,11 @@ export interface ApiUserSessionUserSession extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     device_token: Schema.Attribute.Text;
     expires_at: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -958,8 +948,7 @@ export interface ApiUserSessionUserSession extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     session_token: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -977,11 +966,11 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     flag_reason: Schema.Attribute.String;
     highlights_id: Schema.Attribute.Relation<
       'oneToMany',
@@ -1003,8 +992,7 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
     music_url: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
   };
 }
 

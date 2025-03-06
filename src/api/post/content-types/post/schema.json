@@ -8,8 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "title": {
@@ -82,6 +81,10 @@
     "prayer_count": {
       "type": "integer",
       "default": 0
+    },
+    "creator_id": {
+      "type": "string",
+      "required": true
     }
   }
 }

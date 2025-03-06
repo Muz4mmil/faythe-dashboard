@@ -4,11 +4,11 @@
   "info": {
     "singularName": "user-comment",
     "pluralName": "user-comments",
-    "displayName": "User Comments"
+    "displayName": "User Comments",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "parent_id": {
@@ -51,6 +51,10 @@
       "relation": "oneToMany",
       "target": "api::comment-history.comment-history",
       "mappedBy": "user_comment"
+    },
+    "prayer_count": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
