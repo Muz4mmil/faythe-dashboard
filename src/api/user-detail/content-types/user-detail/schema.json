@@ -4,17 +4,18 @@
   "info": {
     "singularName": "user-detail",
     "pluralName": "user-details",
-    "displayName": "User Details"
+    "displayName": "User Details",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "user_id": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_detail"
     },
     "first_name": {
       "type": "string"

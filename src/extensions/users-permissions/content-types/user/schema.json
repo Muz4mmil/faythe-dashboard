@@ -105,6 +105,12 @@
       "relation": "oneToMany",
       "target": "api::user-follower.user-follower",
       "mappedBy": "following_id"
+    },
+    "user_detail": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-detail.user-detail",
+      "inversedBy": "user_id"
     }
   }
 }

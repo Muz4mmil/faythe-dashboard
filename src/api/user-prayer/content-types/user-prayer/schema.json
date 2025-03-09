@@ -4,11 +4,11 @@
   "info": {
     "singularName": "user-prayer",
     "pluralName": "user-prayers",
-    "displayName": "User Prayers"
+    "displayName": "User Prayers",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "user_post": {
@@ -33,6 +33,10 @@
     "is_deleted": {
       "type": "boolean",
       "default": false
+    },
+    "creator_id": {
+      "type": "string",
+      "required": true
     }
   }
 }

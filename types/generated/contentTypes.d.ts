@@ -682,6 +682,7 @@ export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creator_id: Schema.Attribute.String;
     flag_reason: Schema.Attribute.String;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -709,13 +710,13 @@ export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
 export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
   collectionName: 'user_details';
   info: {
+    description: '';
     displayName: 'User Details';
     pluralName: 'user-details';
     singularName: 'user-detail';
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     address_line_1: Schema.Attribute.String;
@@ -724,7 +725,8 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
     city: Schema.Attribute.String;
     country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     dob: Schema.Attribute.Date;
     first_name: Schema.Attribute.String;
     gender: Schema.Attribute.Enumeration<
@@ -741,7 +743,8 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
     profile_image: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -893,17 +896,19 @@ export interface ApiUserMessageUserMessage extends Struct.CollectionTypeSchema {
 export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
   collectionName: 'user_prayers';
   info: {
+    description: '';
     displayName: 'User Prayers';
     pluralName: 'user-prayers';
     singularName: 'user-prayer';
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creator_id: Schema.Attribute.String & Schema.Attribute.Required;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -914,7 +919,8 @@ export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['user_post', 'user_comment']>;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     user_comment: Schema.Attribute.Relation<
       'manyToOne',
       'api::user-comment.user-comment'
@@ -1495,6 +1501,10 @@ export interface PluginUsersPermissionsUser
     user_chats: Schema.Attribute.Relation<
       'oneToMany',
       'api::user-chat.user-chat'
+    >;
+    user_detail: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-detail.user-detail'
     >;
     user_followers: Schema.Attribute.Relation<
       'oneToMany',

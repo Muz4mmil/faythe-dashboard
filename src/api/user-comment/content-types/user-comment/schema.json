@@ -55,6 +55,9 @@
     "prayer_count": {
       "type": "integer",
       "default": 0
+    },
+    "creator_id": {
+      "type": "string"
     }
   }
 }
