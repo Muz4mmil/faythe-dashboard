@@ -8,8 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "media_type": {
@@ -51,6 +50,25 @@
       "relation": "oneToMany",
       "target": "api::user-highlight.user-highlight",
       "mappedBy": "user_story"
+    },
+    "creator_id": {
+      "type": "string"
+    },
+    "prayer_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "user_prayers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-prayer.user-prayer",
+      "mappedBy": "user_story"
+    },
+    "story_views": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::story-view.story-view",
+      "mappedBy": "story_id"
     }
   }
 }

@@ -27,7 +27,8 @@
       "type": "enumeration",
       "enum": [
         "user_post",
-        "user_comment"
+        "user_comment",
+        "user_story"
       ]
     },
     "is_deleted": {
@@ -37,6 +38,12 @@
     "creator_id": {
       "type": "string",
       "required": true
+    },
+    "user_story": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-story.user-story",
+      "inversedBy": "user_prayers"
     }
   }
 }

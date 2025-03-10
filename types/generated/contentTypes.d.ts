@@ -534,17 +534,19 @@ export interface ApiPostFollowPostFollow extends Struct.CollectionTypeSchema {
 export interface ApiPostHistoryPostHistory extends Struct.CollectionTypeSchema {
   collectionName: 'post_histories';
   info: {
+    description: '';
     displayName: 'Post History';
     pluralName: 'post-histories';
     singularName: 'post-history';
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creator_id: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -554,7 +556,8 @@ export interface ApiPostHistoryPostHistory extends Struct.CollectionTypeSchema {
     post_id: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -618,6 +621,39 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       'api::user-prayer.user-prayer'
     >;
     video_urls: Schema.Attribute.String;
+  };
+}
+
+export interface ApiStoryViewStoryView extends Struct.CollectionTypeSchema {
+  collectionName: 'story_views';
+  info: {
+    displayName: 'story-views';
+    pluralName: 'story-views';
+    singularName: 'story-view';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::story-view.story-view'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    story_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::user-story.user-story'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.String & Schema.Attribute.Required;
+    viewed_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
   };
 }
 
@@ -917,7 +953,9 @@ export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    type: Schema.Attribute.Enumeration<['user_post', 'user_comment']>;
+    type: Schema.Attribute.Enumeration<
+      ['user_post', 'user_comment', 'user_story']
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -926,6 +964,10 @@ export interface ApiUserPrayerUserPrayer extends Struct.CollectionTypeSchema {
       'api::user-comment.user-comment'
     >;
     user_post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
+    user_story: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::user-story.user-story'
+    >;
   };
 }
 
@@ -972,11 +1014,12 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creator_id: Schema.Attribute.String;
     flag_reason: Schema.Attribute.String;
     highlights_id: Schema.Attribute.Relation<
       'oneToMany',
@@ -996,9 +1039,19 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
     media_type: Schema.Attribute.Enumeration<['image', 'video']>;
     media_url: Schema.Attribute.String & Schema.Attribute.Required;
     music_url: Schema.Attribute.String;
+    prayer_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
+    story_views: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::story-view.story-view'
+    >;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_prayers: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-prayer.user-prayer'
+    >;
   };
 }
 
@@ -1540,6 +1593,7 @@ declare module '@strapi/strapi' {
       'api::post-follow.post-follow': ApiPostFollowPostFollow;
       'api::post-history.post-history': ApiPostHistoryPostHistory;
       'api::post.post': ApiPostPost;
+      'api::story-view.story-view': ApiStoryViewStoryView;
       'api::user-chat.user-chat': ApiUserChatUserChat;
       'api::user-comment.user-comment': ApiUserCommentUserComment;
       'api::user-detail.user-detail': ApiUserDetailUserDetail;

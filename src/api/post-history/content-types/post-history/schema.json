@@ -4,11 +4,11 @@
   "info": {
     "singularName": "post-history",
     "pluralName": "post-histories",
-    "displayName": "Post History"
+    "displayName": "Post History",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "post_id": {
@@ -16,6 +16,9 @@
       "relation": "manyToOne",
       "target": "api::post.post",
       "inversedBy": "post_histories"
+    },
+    "creator_id": {
+      "type": "string"
     }
   }
 }
