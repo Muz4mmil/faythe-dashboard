@@ -379,12 +379,15 @@ export interface ApiBlockedUserBlockedUser extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
-    blocked_user_id: Schema.Attribute.String;
+    blocked_user_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -394,7 +397,39 @@ export interface ApiBlockedUserBlockedUser extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     reason: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiChatChat extends Struct.CollectionTypeSchema {
+  collectionName: 'chats';
+  info: {
+    description: '';
+    displayName: 'Koomba Chats';
+    pluralName: 'chats';
+    singularName: 'chat';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::chat.chat'> &
+      Schema.Attribute.Private;
+    messages: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    topic: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -433,6 +468,125 @@ export interface ApiCommentHistoryCommentHistory
   };
 }
 
+export interface ApiEventInterestEventInterest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'event_interests';
+  info: {
+    description: '';
+    displayName: 'Event Interests';
+    pluralName: 'event-interests';
+    singularName: 'event-interest';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event_id: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-interest.event-interest'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiEventParticipantEventParticipant
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'event_participants';
+  info: {
+    displayName: 'Event Participants';
+    pluralName: 'event-participants';
+    singularName: 'event-participant';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event_id: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-participant.event-participant'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    description: '';
+    displayName: 'Events';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creator: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    creator_id: Schema.Attribute.String;
+    date: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
+    event_interests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-interest.event-interest'
+    >;
+    flag_reason: Schema.Attribute.Enumeration<
+      ['Harassment', 'fake information', 'fraud and scam']
+    >;
+    image_urls: Schema.Attribute.Text;
+    interested: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    location: Schema.Attribute.String;
+    mode: Schema.Attribute.Enumeration<['in-person', 'online']>;
+    participants: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-participant.event-participant'
+    >;
+    participants_count: Schema.Attribute.Integer &
+      Schema.Attribute.DefaultTo<0>;
+    price: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    venue: Schema.Attribute.String;
+  };
+}
+
 export interface ApiJournalPresetQuestionJournalPresetQuestion
   extends Struct.CollectionTypeSchema {
   collectionName: 'journal_preset_questions';
@@ -468,6 +622,147 @@ export interface ApiJournalPresetQuestionJournalPresetQuestion
   };
 }
 
+export interface ApiJournalSettingJournalSetting
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'journal_settings';
+  info: {
+    displayName: 'Journal-settings';
+    pluralName: 'journal-settings';
+    singularName: 'journal-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::journal-setting.journal-setting'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    questions: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiJournalJournal extends Struct.CollectionTypeSchema {
+  collectionName: 'journals';
+  info: {
+    description: '';
+    displayName: 'Journal';
+    pluralName: 'journals';
+    singularName: 'journal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    images: Schema.Attribute.JSON;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::journal.journal'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    questions: Schema.Attribute.JSON;
+    responses: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiMusicLibraryMusicLibrary
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'music_libraries';
+  info: {
+    description: '';
+    displayName: 'Music Library';
+    pluralName: 'music-libraries';
+    singularName: 'music-library';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    artist: Schema.Attribute.String;
+    cover: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::music-library.music-library'
+    > &
+      Schema.Attribute.Private;
+    posts: Schema.Attribute.Relation<'oneToMany', 'api::post.post'>;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+    user_stories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-story.user-story'
+    >;
+  };
+}
+
+export interface ApiOnboardingOnboarding extends Struct.CollectionTypeSchema {
+  collectionName: 'onboardings';
+  info: {
+    description: '';
+    displayName: 'onboarding';
+    pluralName: 'onboardings';
+    singularName: 'onboarding';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::onboarding.onboarding'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    responses: Schema.Attribute.JSON;
+    subscribed: Schema.Attribute.Boolean;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiOtpVerificationOtpVerification
   extends Struct.CollectionTypeSchema {
   collectionName: 'otp_verifications';
@@ -479,11 +774,11 @@ export interface ApiOtpVerificationOtpVerification
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     expires_at: Schema.Attribute.DateTime;
     is_verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -493,9 +788,11 @@ export interface ApiOtpVerificationOtpVerification
     > &
       Schema.Attribute.Private;
     otp_code: Schema.Attribute.String;
+    phoneNo: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -503,20 +800,47 @@ export interface ApiOtpVerificationOtpVerification
   };
 }
 
+export interface ApiOtpOtp extends Struct.CollectionTypeSchema {
+  collectionName: 'otps';
+  info: {
+    displayName: 'OTPs';
+    pluralName: 'otps';
+    singularName: 'otp';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::otp.otp'> &
+      Schema.Attribute.Private;
+    otp: Schema.Attribute.String;
+    phoneNo: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPostFollowPostFollow extends Struct.CollectionTypeSchema {
   collectionName: 'post_follows';
   info: {
+    description: '';
     displayName: 'Post Follows';
     pluralName: 'post-follows';
     singularName: 'post-follow';
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -527,7 +851,12 @@ export interface ApiPostFollowPostFollow extends Struct.CollectionTypeSchema {
     post_id: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -576,6 +905,10 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creator: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     creator_id: Schema.Attribute.String & Schema.Attribute.Required;
     description: Schema.Attribute.Text;
     flag_reason: Schema.Attribute.Enumeration<
@@ -595,6 +928,11 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'> &
       Schema.Attribute.Private;
+    music: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::music-library.music-library'
+    >;
+    parent_id: Schema.Attribute.Relation<'oneToOne', 'api::post.post'>;
     post_follows: Schema.Attribute.Relation<
       'oneToMany',
       'api::post-follow.post-follow'
@@ -609,13 +947,10 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     type: Schema.Attribute.Enumeration<
       ['post', 'prayer_request', 'testimonial']
     >;
+    update_id: Schema.Attribute.Relation<'oneToOne', 'api::post.post'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user_comments: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::user-comment.user-comment'
-    >;
     user_prayers: Schema.Attribute.Relation<
       'oneToMany',
       'api::user-prayer.user-prayer'
@@ -624,10 +959,44 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiReportReport extends Struct.CollectionTypeSchema {
+  collectionName: 'reports';
+  info: {
+    displayName: 'Reports';
+    pluralName: 'reports';
+    singularName: 'report';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content_id: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creator_id: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::report.report'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    reporter_id: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<
+      ['post', 'prayer_request', 'story', 'event', 'user']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiStoryViewStoryView extends Struct.CollectionTypeSchema {
   collectionName: 'story_views';
   info: {
-    displayName: 'story-views';
+    description: '';
+    displayName: 'Story Views';
     pluralName: 'story-views';
     singularName: 'story-view';
   };
@@ -654,6 +1023,41 @@ export interface ApiStoryViewStoryView extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     user_id: Schema.Attribute.String & Schema.Attribute.Required;
     viewed_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiStreakStreak extends Struct.CollectionTypeSchema {
+  collectionName: 'streaks';
+  info: {
+    description: '';
+    displayName: 'streaks';
+    pluralName: 'streaks';
+    singularName: 'streak';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    duration: Schema.Attribute.Integer;
+    entries: Schema.Attribute.JSON;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::streak.streak'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -718,6 +1122,10 @@ export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creator: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     creator_id: Schema.Attribute.String;
     flag_reason: Schema.Attribute.String;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -728,7 +1136,7 @@ export interface ApiUserCommentUserComment extends Struct.CollectionTypeSchema {
       'api::user-comment.user-comment'
     > &
       Schema.Attribute.Private;
-    parent_id: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
+    parent_id: Schema.Attribute.String;
     parent_type: Schema.Attribute.Enumeration<['post', 'comment']> &
       Schema.Attribute.Required;
     prayer_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
@@ -765,9 +1173,7 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     dob: Schema.Attribute.Date;
     first_name: Schema.Attribute.String;
-    gender: Schema.Attribute.Enumeration<
-      ['Male', 'Female', 'Trans', 'Not specified']
-    >;
+    gender: Schema.Attribute.Enumeration<['MALE', 'FEMALE']>;
     last_name: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -778,6 +1184,8 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
     pincode: Schema.Attribute.String;
     profile_image: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    relationship_status: Schema.Attribute.Enumeration<['SINGLE', 'MARRIED']>;
+    sobriety_date: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -827,17 +1235,18 @@ export interface ApiUserHighlightUserHighlight
   extends Struct.CollectionTypeSchema {
   collectionName: 'user_highlights';
   info: {
+    description: '';
     displayName: 'User Highlights';
     pluralName: 'user-highlights';
     singularName: 'user-highlight';
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     flag_reason: Schema.Attribute.String;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -850,9 +1259,14 @@ export interface ApiUserHighlightUserHighlight
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
-    user_story: Schema.Attribute.Relation<
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
       'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    user_stories: Schema.Attribute.Relation<
+      'manyToMany',
       'api::user-story.user-story'
     >;
   };
@@ -1019,10 +1433,14 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creator: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     creator_id: Schema.Attribute.String;
     flag_reason: Schema.Attribute.String;
-    highlights_id: Schema.Attribute.Relation<
-      'oneToMany',
+    highlights_ids: Schema.Attribute.Relation<
+      'manyToMany',
       'api::user-highlight.user-highlight'
     >;
     is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1038,6 +1456,10 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     media_type: Schema.Attribute.Enumeration<['image', 'video']>;
     media_url: Schema.Attribute.String & Schema.Attribute.Required;
+    music: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::music-library.music-library'
+    >;
     music_url: Schema.Attribute.String;
     prayer_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
@@ -1052,6 +1474,7 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::user-prayer.user-prayer'
     >;
+    view_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
   };
 }
 
@@ -1513,6 +1936,10 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    blocked_users: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::blocked-user.blocked-user'
+    >;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -1523,12 +1950,16 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    event_interests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-interest.event-interest'
+    >;
+    events: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
     flag_reason: Schema.Attribute.Enumeration<
       ['Hate Speech', 'Scam or Fraud', 'False Information']
     >;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    is_registered: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1541,6 +1972,11 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     phone: Schema.Attribute.String & Schema.Attribute.Unique;
+    post_follows: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::post-follow.post-follow'
+    >;
+    posts: Schema.Attribute.Relation<'oneToMany', 'api::post.post'>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1555,7 +1991,11 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::user-chat.user-chat'
     >;
-    user_detail: Schema.Attribute.Relation<
+    user_comments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-comment.user-comment'
+    >;
+    user_details: Schema.Attribute.Relation<
       'oneToOne',
       'api::user-detail.user-detail'
     >;
@@ -1563,9 +2003,17 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::user-follower.user-follower'
     >;
+    user_highlights: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-highlight.user-highlight'
+    >;
     user_messages: Schema.Attribute.Relation<
       'oneToMany',
       'api::user-message.user-message'
+    >;
+    user_stories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-story.user-story'
     >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -1587,13 +2035,24 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blocked-user.blocked-user': ApiBlockedUserBlockedUser;
+      'api::chat.chat': ApiChatChat;
       'api::comment-history.comment-history': ApiCommentHistoryCommentHistory;
+      'api::event-interest.event-interest': ApiEventInterestEventInterest;
+      'api::event-participant.event-participant': ApiEventParticipantEventParticipant;
+      'api::event.event': ApiEventEvent;
       'api::journal-preset-question.journal-preset-question': ApiJournalPresetQuestionJournalPresetQuestion;
+      'api::journal-setting.journal-setting': ApiJournalSettingJournalSetting;
+      'api::journal.journal': ApiJournalJournal;
+      'api::music-library.music-library': ApiMusicLibraryMusicLibrary;
+      'api::onboarding.onboarding': ApiOnboardingOnboarding;
       'api::otp-verification.otp-verification': ApiOtpVerificationOtpVerification;
+      'api::otp.otp': ApiOtpOtp;
       'api::post-follow.post-follow': ApiPostFollowPostFollow;
       'api::post-history.post-history': ApiPostHistoryPostHistory;
       'api::post.post': ApiPostPost;
+      'api::report.report': ApiReportReport;
       'api::story-view.story-view': ApiStoryViewStoryView;
+      'api::streak.streak': ApiStreakStreak;
       'api::user-chat.user-chat': ApiUserChatUserChat;
       'api::user-comment.user-comment': ApiUserCommentUserComment;
       'api::user-detail.user-detail': ApiUserDetailUserDetail;

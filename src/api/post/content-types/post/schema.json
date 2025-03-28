@@ -43,12 +43,6 @@
       "type": "boolean",
       "default": false
     },
-    "user_comments": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::user-comment.user-comment",
-      "mappedBy": "parent_id"
-    },
     "user_prayers": {
       "type": "relation",
       "relation": "oneToMany",
@@ -85,6 +79,30 @@
     "creator_id": {
       "type": "string",
       "required": true
+    },
+    "parent_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::post.post",
+      "inversedBy": "update_id"
+    },
+    "update_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::post.post",
+      "mappedBy": "parent_id"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "posts"
+    },
+    "music": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::music-library.music-library",
+      "inversedBy": "posts"
     }
   }
 }

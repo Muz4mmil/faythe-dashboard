@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "event_participants",
+  "info": {
+    "singularName": "event-participant",
+    "pluralName": "event-participants",
+    "displayName": "Event Participants"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "event_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "participants"
+    },
+    "user_id": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

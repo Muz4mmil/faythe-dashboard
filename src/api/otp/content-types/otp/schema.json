@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "otps",
+  "info": {
+    "singularName": "otp",
+    "pluralName": "otps",
+    "displayName": "OTPs"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "phoneNo": {
+      "type": "string"
+    },
+    "otp": {
+      "type": "string"
+    }
+  }
+}

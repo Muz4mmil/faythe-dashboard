@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "event_interests",
+  "info": {
+    "singularName": "event-interest",
+    "pluralName": "event-interests",
+    "displayName": "Event Interests",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "event_interests"
+    },
+    "event_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "event_interests"
+    }
+  }
+}

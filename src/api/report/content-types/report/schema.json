@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "singularName": "report",
+    "pluralName": "reports",
+    "displayName": "Reports"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "content_id": {
+      "type": "string",
+      "required": true
+    },
+    "creator_id": {
+      "type": "string"
+    },
+    "reporter_id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "post",
+        "prayer_request",
+        "story",
+        "event",
+        "user"
+      ]
+    }
+  }
+}

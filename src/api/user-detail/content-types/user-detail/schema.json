@@ -15,7 +15,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "user_detail"
+      "inversedBy": "user_details"
     },
     "first_name": {
       "type": "string"
@@ -32,10 +32,8 @@
     "gender": {
       "type": "enumeration",
       "enum": [
-        "Male",
-        "Female",
-        "Trans",
-        "Not specified"
+        "MALE",
+        "FEMALE"
       ]
     },
     "dob": {
@@ -55,6 +53,16 @@
     },
     "pincode": {
       "type": "string"
+    },
+    "relationship_status": {
+      "type": "enumeration",
+      "enum": [
+        "SINGLE",
+        "MARRIED"
+      ]
+    },
+    "sobriety_date": {
+      "type": "date"
     }
   }
 }

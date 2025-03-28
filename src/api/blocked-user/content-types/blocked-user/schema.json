@@ -8,8 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "user_id": {
@@ -17,11 +16,14 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "blocked_user_id": {
-      "type": "string"
-    },
     "reason": {
       "type": "text"
+    },
+    "blocked_user_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "blocked_users"
     }
   }
 }

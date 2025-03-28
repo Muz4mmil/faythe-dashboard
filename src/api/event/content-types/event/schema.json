@@ -1,0 +1,95 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Events",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "mode": {
+      "type": "enumeration",
+      "enum": [
+        "in-person",
+        "online"
+      ]
+    },
+    "venue": {
+      "type": "string"
+    },
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "interested": {
+      "type": "integer",
+      "default": 0
+    },
+    "image_urls": {
+      "type": "text"
+    },
+    "location": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "is_flagged": {
+      "type": "boolean",
+      "default": false
+    },
+    "flag_reason": {
+      "type": "enumeration",
+      "enum": [
+        "Harassment",
+        "fake information",
+        "fraud and scam"
+      ]
+    },
+    "is_archived": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "participants": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event-participant.event-participant",
+      "mappedBy": "event_id"
+    },
+    "participants_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "creator_id": {
+      "type": "string"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "events"
+    },
+    "event_interests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event-interest.event-interest",
+      "mappedBy": "event_id"
+    }
+  }
+}

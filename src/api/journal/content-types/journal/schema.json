@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "journals",
+  "info": {
+    "singularName": "journal",
+    "pluralName": "journals",
+    "displayName": "Journal",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "date": {
+      "type": "date"
+    },
+    "questions": {
+      "type": "json"
+    },
+    "responses": {
+      "type": "json"
+    },
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "images": {
+      "type": "json"
+    }
+  }
+}

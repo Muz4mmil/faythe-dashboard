@@ -11,12 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "parent_id": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::post.post",
-      "inversedBy": "user_comments"
-    },
     "parent_type": {
       "type": "enumeration",
       "enum": [
@@ -58,6 +52,15 @@
     },
     "creator_id": {
       "type": "string"
+    },
+    "parent_id": {
+      "type": "string"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_comments"
     }
   }
 }

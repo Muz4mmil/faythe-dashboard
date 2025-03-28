@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "music_libraries",
+  "info": {
+    "singularName": "music-library",
+    "pluralName": "music-libraries",
+    "displayName": "Music Library",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "artist": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "cover": {
+      "type": "string"
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "music"
+    },
+    "user_stories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-story.user-story",
+      "mappedBy": "music"
+    }
+  }
+}

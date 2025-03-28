@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "streaks",
+  "info": {
+    "singularName": "streak",
+    "pluralName": "streaks",
+    "displayName": "streaks",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "entries": {
+      "type": "json"
+    },
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

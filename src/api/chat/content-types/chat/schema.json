@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chats",
+  "info": {
+    "singularName": "chat",
+    "pluralName": "chats",
+    "displayName": "Koomba Chats",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "messages": {
+      "type": "json"
+    },
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "topic": {
+      "type": "string"
+    }
+  }
+}

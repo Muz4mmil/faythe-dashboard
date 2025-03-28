@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "journal_settings",
+  "info": {
+    "singularName": "journal-setting",
+    "pluralName": "journal-settings",
+    "displayName": "Journal-settings"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "questions": {
+      "type": "json"
+    },
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

@@ -45,12 +45,6 @@
       "type": "boolean",
       "default": false
     },
-    "highlights_id": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::user-highlight.user-highlight",
-      "mappedBy": "user_story"
-    },
     "creator_id": {
       "type": "string"
     },
@@ -69,6 +63,28 @@
       "relation": "oneToMany",
       "target": "api::story-view.story-view",
       "mappedBy": "story_id"
+    },
+    "view_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_stories"
+    },
+    "music": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::music-library.music-library",
+      "inversedBy": "user_stories"
+    },
+    "highlights_ids": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::user-highlight.user-highlight",
+      "mappedBy": "user_stories"
     }
   }
 }

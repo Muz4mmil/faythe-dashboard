@@ -4,11 +4,11 @@
   "info": {
     "singularName": "user-highlight",
     "pluralName": "user-highlights",
-    "displayName": "User Highlights"
+    "displayName": "User Highlights",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "title": {
@@ -25,11 +25,17 @@
       "type": "boolean",
       "default": false
     },
-    "user_story": {
+    "user_stories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::user-story.user-story",
+      "inversedBy": "highlights_ids"
+    },
+    "user": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user-story.user-story",
-      "inversedBy": "highlights_id"
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_highlights"
     }
   }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "story-view",
     "pluralName": "story-views",
-    "displayName": "story-views"
+    "displayName": "Story Views",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true

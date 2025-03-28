@@ -8,8 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "attributes": {
     "user_id": {
@@ -26,6 +25,9 @@
     "is_verified": {
       "type": "boolean",
       "default": false
+    },
+    "phoneNo": {
+      "type": "string"
     }
   }
 }

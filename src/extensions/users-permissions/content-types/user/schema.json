@@ -81,9 +81,6 @@
       "type": "string",
       "unique": true
     },
-    "is_registered": {
-      "type": "boolean"
-    },
     "is_flagged": {
       "type": "boolean",
       "default": false
@@ -106,11 +103,59 @@
       "target": "api::user-follower.user-follower",
       "mappedBy": "following_id"
     },
-    "user_detail": {
+    "user_details": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::user-detail.user-detail",
-      "inversedBy": "user_id"
+      "mappedBy": "user_id"
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "creator"
+    },
+    "post_follows": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post-follow.post-follow",
+      "mappedBy": "user_id"
+    },
+    "blocked_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::blocked-user.blocked-user",
+      "mappedBy": "blocked_user_id"
+    },
+    "user_stories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-story.user-story",
+      "mappedBy": "creator"
+    },
+    "user_comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-comment.user-comment",
+      "mappedBy": "creator"
+    },
+    "events": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event.event",
+      "mappedBy": "creator"
+    },
+    "event_interests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event-interest.event-interest",
+      "mappedBy": "user_id"
+    },
+    "user_highlights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-highlight.user-highlight",
+      "mappedBy": "user"
     }
   }
 }
