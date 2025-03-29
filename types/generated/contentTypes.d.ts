@@ -962,6 +962,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
 export interface ApiReportReport extends Struct.CollectionTypeSchema {
   collectionName: 'reports';
   info: {
+    description: '';
     displayName: 'Reports';
     pluralName: 'reports';
     singularName: 'report';
@@ -981,6 +982,10 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
       'api::report.report'
     > &
       Schema.Attribute.Private;
+    media: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     publishedAt: Schema.Attribute.DateTime;
     reporter_id: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
