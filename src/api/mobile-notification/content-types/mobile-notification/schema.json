@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobile_notifications",
+  "info": {
+    "singularName": "mobile-notification",
+    "pluralName": "mobile-notifications",
+    "displayName": "Mobile Notifications"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "mobile_notifications"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "post",
+        "prayer_requests",
+        "stories",
+        "events",
+        "koomba",
+        "store",
+        "others"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "navigation": {
+      "type": "string"
+    },
+    "navigation_id": {
+      "type": "string"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

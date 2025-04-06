@@ -28,7 +28,8 @@
         "prayer_request",
         "story",
         "event",
-        "user"
+        "user",
+        "comment"
       ]
     }
   }

@@ -156,6 +156,18 @@
       "relation": "oneToMany",
       "target": "api::user-highlight.user-highlight",
       "mappedBy": "user"
+    },
+    "user_testimonies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-testimony.user-testimony",
+      "mappedBy": "creator"
+    },
+    "mobile_notifications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mobile-notification.mobile-notification",
+      "mappedBy": "user_id"
     }
   }
 }

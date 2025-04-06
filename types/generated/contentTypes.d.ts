@@ -566,6 +566,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
@@ -584,6 +585,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     venue: Schema.Attribute.String;
+    video_urls: Schema.Attribute.Text;
   };
 }
 
@@ -686,6 +688,54 @@ export interface ApiJournalJournal extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiMobileNotificationMobileNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'mobile_notifications';
+  info: {
+    displayName: 'Mobile Notifications';
+    pluralName: 'mobile-notifications';
+    singularName: 'mobile-notification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    is_read: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mobile-notification.mobile-notification'
+    > &
+      Schema.Attribute.Private;
+    navigation: Schema.Attribute.String;
+    navigation_id: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<
+      [
+        'post',
+        'prayer_requests',
+        'stories',
+        'events',
+        'koomba',
+        'store',
+        'others',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -921,7 +971,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
         'something else',
       ]
     >;
-    image_urls: Schema.Attribute.String;
+    image_urls: Schema.Attribute.Text;
     is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -955,7 +1005,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::user-prayer.user-prayer'
     >;
-    video_urls: Schema.Attribute.String;
+    video_urls: Schema.Attribute.Text;
   };
 }
 
@@ -982,14 +1032,10 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
       'api::report.report'
     > &
       Schema.Attribute.Private;
-    media: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
     publishedAt: Schema.Attribute.DateTime;
     reporter_id: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
-      ['post', 'prayer_request', 'story', 'event', 'user']
+      ['post', 'prayer_request', 'story', 'event', 'user', 'comment']
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1483,6 +1529,45 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiUserTestimonyUserTestimony
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_testimonies';
+  info: {
+    description: '';
+    displayName: 'User Testimonies';
+    pluralName: 'user-testimonies';
+    singularName: 'user-testimony';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creator: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    hook_line: Schema.Attribute.String;
+    image_urls: Schema.Attribute.Text;
+    is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-testimony.user-testimony'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<['testimony', 'praisimony']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1971,6 +2056,10 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    mobile_notifications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mobile-notification.mobile-notification'
+    >;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -2020,6 +2109,10 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::user-story.user-story'
     >;
+    user_testimonies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-testimony.user-testimony'
+    >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -2048,6 +2141,7 @@ declare module '@strapi/strapi' {
       'api::journal-preset-question.journal-preset-question': ApiJournalPresetQuestionJournalPresetQuestion;
       'api::journal-setting.journal-setting': ApiJournalSettingJournalSetting;
       'api::journal.journal': ApiJournalJournal;
+      'api::mobile-notification.mobile-notification': ApiMobileNotificationMobileNotification;
       'api::music-library.music-library': ApiMusicLibraryMusicLibrary;
       'api::onboarding.onboarding': ApiOnboardingOnboarding;
       'api::otp-verification.otp-verification': ApiOtpVerificationOtpVerification;
@@ -2068,6 +2162,7 @@ declare module '@strapi/strapi' {
       'api::user-prayer.user-prayer': ApiUserPrayerUserPrayer;
       'api::user-session.user-session': ApiUserSessionUserSession;
       'api::user-story.user-story': ApiUserStoryUserStory;
+      'api::user-testimony.user-testimony': ApiUserTestimonyUserTestimony;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

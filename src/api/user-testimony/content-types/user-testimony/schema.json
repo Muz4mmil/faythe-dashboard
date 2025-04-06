@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_testimonies",
+  "info": {
+    "singularName": "user-testimony",
+    "pluralName": "user-testimonies",
+    "displayName": "User Testimonies",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "hook_line": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image_urls": {
+      "type": "text"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "testimony",
+        "praisimony"
+      ]
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_testimonies"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

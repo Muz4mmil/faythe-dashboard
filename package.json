@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.10.3",
+    "@strapi/plugin-graphql": "^5.12.1",
     "@strapi/plugin-users-permissions": "5.10.3",
     "@strapi/strapi": "5.10.3",
     "mysql2": "3.9.8",
@@ -20,7 +21,6 @@
     "react-router-dom": "^6.0.0",
     "styled-components": "^6.0.0"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"

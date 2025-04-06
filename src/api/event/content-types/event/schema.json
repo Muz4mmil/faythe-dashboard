@@ -90,6 +90,12 @@
       "relation": "oneToMany",
       "target": "api::event-interest.event-interest",
       "mappedBy": "event_id"
+    },
+    "link": {
+      "type": "string"
+    },
+    "video_urls": {
+      "type": "text"
     }
   }
 }
