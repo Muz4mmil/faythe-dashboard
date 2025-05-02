@@ -168,6 +168,30 @@
       "relation": "oneToMany",
       "target": "api::mobile-notification.mobile-notification",
       "mappedBy": "user_id"
+    },
+    "subscriptions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-subscription-mapping.user-subscription-mapping",
+      "mappedBy": "user"
+    },
+    "transactions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::transaction.transaction",
+      "mappedBy": "user"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "user"
+    },
+    "mobile_device_tokens": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mobile-device-token.mobile-device-token",
+      "mappedBy": "user"
     }
   }
 }

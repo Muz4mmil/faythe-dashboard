@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "delete_records",
+  "info": {
+    "singularName": "delete-record",
+    "pluralName": "delete-records",
+    "displayName": "Delete Records"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "reason": {
+      "type": "text"
+    }
+  }
+}

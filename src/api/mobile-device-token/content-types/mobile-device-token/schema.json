@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobile_device_tokens",
+  "info": {
+    "singularName": "mobile-device-token",
+    "pluralName": "mobile-device-tokens",
+    "displayName": "Mobile Device Token",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "device_token": {
+      "type": "text"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "mobile_device_tokens"
+    }
+  }
+}

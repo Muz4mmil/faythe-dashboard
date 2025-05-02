@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_subscription_mappings",
+  "info": {
+    "singularName": "user-subscription-mapping",
+    "pluralName": "user-subscription-mappings",
+    "displayName": "User Subscription Mapping",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "subscriptions"
+    },
+    "has_trial_expired": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false
+    },
+    "expiry_date": {
+      "type": "datetime"
+    },
+    "subscription_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subscription-plan.subscription-plan"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::order.order"
+    },
+    "plan_status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    }
+  }
+}

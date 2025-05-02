@@ -4,7 +4,8 @@
   "info": {
     "singularName": "mobile-notification",
     "pluralName": "mobile-notifications",
-    "displayName": "Mobile Notifications"
+    "displayName": "Mobile Notifications",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -20,6 +21,11 @@
       "type": "enumeration",
       "enum": [
         "post",
+        "follow",
+        "story_like",
+        "like",
+        "comment",
+        "following_story",
         "prayer_requests",
         "stories",
         "events",

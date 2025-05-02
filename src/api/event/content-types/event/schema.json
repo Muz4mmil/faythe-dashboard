@@ -92,7 +92,7 @@
       "mappedBy": "event_id"
     },
     "link": {
-      "type": "string"
+      "type": "text"
     },
     "video_urls": {
       "type": "text"

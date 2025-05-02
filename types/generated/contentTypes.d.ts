@@ -468,6 +468,39 @@ export interface ApiCommentHistoryCommentHistory
   };
 }
 
+export interface ApiDeleteRecordDeleteRecord
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'delete_records';
+  info: {
+    displayName: 'Delete Records';
+    pluralName: 'delete-records';
+    singularName: 'delete-record';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::delete-record.delete-record'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiEventInterestEventInterest
   extends Struct.CollectionTypeSchema {
   collectionName: 'event_interests';
@@ -566,7 +599,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_flagged: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    link: Schema.Attribute.String;
+    link: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
@@ -693,10 +726,45 @@ export interface ApiJournalJournal extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMobileDeviceTokenMobileDeviceToken
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'mobile_device_tokens';
+  info: {
+    description: '';
+    displayName: 'Mobile Device Token';
+    pluralName: 'mobile-device-tokens';
+    singularName: 'mobile-device-token';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    device_token: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mobile-device-token.mobile-device-token'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiMobileNotificationMobileNotification
   extends Struct.CollectionTypeSchema {
   collectionName: 'mobile_notifications';
   info: {
+    description: '';
     displayName: 'Mobile Notifications';
     pluralName: 'mobile-notifications';
     singularName: 'mobile-notification';
@@ -723,6 +791,11 @@ export interface ApiMobileNotificationMobileNotification
     type: Schema.Attribute.Enumeration<
       [
         'post',
+        'follow',
+        'story_like',
+        'like',
+        'comment',
+        'following_story',
         'prayer_requests',
         'stories',
         'events',
@@ -808,6 +881,48 @@ export interface ApiOnboardingOnboarding extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     user_id: Schema.Attribute.Relation<
       'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
+  collectionName: 'orders';
+  info: {
+    description: '';
+    displayName: 'orders';
+    pluralName: 'orders';
+    singularName: 'order';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expiry_date: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
+      Schema.Attribute.Private;
+    order_id: Schema.Attribute.Text;
+    plan_status: Schema.Attribute.Enumeration<['active', 'inactive']>;
+    publishedAt: Schema.Attribute.DateTime;
+    purchase_date: Schema.Attribute.DateTime;
+    subscription_plan: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::subscription-plan.subscription-plan'
+    >;
+    transaction: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::transaction.transaction'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -1112,6 +1227,79 @@ export interface ApiStreakStreak extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSubscriptionPlanSubscriptionPlan
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'subscription_plans';
+  info: {
+    displayName: 'Subscription Plans';
+    pluralName: 'subscription-plans';
+    singularName: 'subscription-plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    days: Schema.Attribute.Integer;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subscription-plan.subscription-plan'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    price: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
+  collectionName: 'transactions';
+  info: {
+    description: '';
+    displayName: 'transactions';
+    pluralName: 'transactions';
+    singularName: 'transaction';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transaction.transaction'
+    > &
+      Schema.Attribute.Private;
+    order_id: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    subscription_plan: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::subscription-plan.subscription-plan'
+    >;
+    transaction_id: Schema.Attribute.Text;
+    transaction_status: Schema.Attribute.Enumeration<
+      ['success', 'failure', 'pending']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiUserChatUserChat extends Struct.CollectionTypeSchema {
   collectionName: 'user_chats';
   info: {
@@ -1233,7 +1421,8 @@ export interface ApiUserDetailUserDetail extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     pincode: Schema.Attribute.String;
-    profile_image: Schema.Attribute.String;
+    profile_image: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'https://faythebucket.s3.us-west-1.amazonaws.com/images/default-profile.jpg'>;
     publishedAt: Schema.Attribute.DateTime;
     relationship_status: Schema.Attribute.Enumeration<['SINGLE', 'MARRIED']>;
     sobriety_date: Schema.Attribute.Date;
@@ -1526,6 +1715,49 @@ export interface ApiUserStoryUserStory extends Struct.CollectionTypeSchema {
       'api::user-prayer.user-prayer'
     >;
     view_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+  };
+}
+
+export interface ApiUserSubscriptionMappingUserSubscriptionMapping
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_subscription_mappings';
+  info: {
+    description: '';
+    displayName: 'User Subscription Mapping';
+    pluralName: 'user-subscription-mappings';
+    singularName: 'user-subscription-mapping';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expiry_date: Schema.Attribute.DateTime;
+    has_trial_expired: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    is_premium: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-subscription-mapping.user-subscription-mapping'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Relation<'oneToOne', 'api::order.order'>;
+    plan_status: Schema.Attribute.Enumeration<['active', 'inactive']>;
+    publishedAt: Schema.Attribute.DateTime;
+    subscription_id: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::subscription-plan.subscription-plan'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -2056,10 +2288,15 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    mobile_device_tokens: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mobile-device-token.mobile-device-token'
+    >;
     mobile_notifications: Schema.Attribute.Relation<
       'oneToMany',
       'api::mobile-notification.mobile-notification'
     >;
+    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -2077,6 +2314,14 @@ export interface PluginUsersPermissionsUser
     role: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    subscriptions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-subscription-mapping.user-subscription-mapping'
+    >;
+    transactions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transaction.transaction'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -2135,15 +2380,18 @@ declare module '@strapi/strapi' {
       'api::blocked-user.blocked-user': ApiBlockedUserBlockedUser;
       'api::chat.chat': ApiChatChat;
       'api::comment-history.comment-history': ApiCommentHistoryCommentHistory;
+      'api::delete-record.delete-record': ApiDeleteRecordDeleteRecord;
       'api::event-interest.event-interest': ApiEventInterestEventInterest;
       'api::event-participant.event-participant': ApiEventParticipantEventParticipant;
       'api::event.event': ApiEventEvent;
       'api::journal-preset-question.journal-preset-question': ApiJournalPresetQuestionJournalPresetQuestion;
       'api::journal-setting.journal-setting': ApiJournalSettingJournalSetting;
       'api::journal.journal': ApiJournalJournal;
+      'api::mobile-device-token.mobile-device-token': ApiMobileDeviceTokenMobileDeviceToken;
       'api::mobile-notification.mobile-notification': ApiMobileNotificationMobileNotification;
       'api::music-library.music-library': ApiMusicLibraryMusicLibrary;
       'api::onboarding.onboarding': ApiOnboardingOnboarding;
+      'api::order.order': ApiOrderOrder;
       'api::otp-verification.otp-verification': ApiOtpVerificationOtpVerification;
       'api::otp.otp': ApiOtpOtp;
       'api::post-follow.post-follow': ApiPostFollowPostFollow;
@@ -2152,6 +2400,8 @@ declare module '@strapi/strapi' {
       'api::report.report': ApiReportReport;
       'api::story-view.story-view': ApiStoryViewStoryView;
       'api::streak.streak': ApiStreakStreak;
+      'api::subscription-plan.subscription-plan': ApiSubscriptionPlanSubscriptionPlan;
+      'api::transaction.transaction': ApiTransactionTransaction;
       'api::user-chat.user-chat': ApiUserChatUserChat;
       'api::user-comment.user-comment': ApiUserCommentUserComment;
       'api::user-detail.user-detail': ApiUserDetailUserDetail;
@@ -2162,6 +2412,7 @@ declare module '@strapi/strapi' {
       'api::user-prayer.user-prayer': ApiUserPrayerUserPrayer;
       'api::user-session.user-session': ApiUserSessionUserSession;
       'api::user-story.user-story': ApiUserStoryUserStory;
+      'api::user-subscription-mapping.user-subscription-mapping': ApiUserSubscriptionMappingUserSubscriptionMapping;
       'api::user-testimony.user-testimony': ApiUserTestimonyUserTestimony;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
